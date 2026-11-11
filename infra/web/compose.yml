@@ -7,6 +7,11 @@
 # En la VPS vive en ~/vcconsultores/web/ junto con nginx.conf y current/, que es el dist/
 # publicado. Ver docs/runbook-publicar.md.
 
+# Nombre de proyecto fijo. Sin él, Compose usa el de la carpeta (`web`), que es el MISMO que el
+# del sitio del hotel (~/aurahost/web), con el mismo servicio `web`: un `up --force-recreate`
+# aquí reemplazaría el contenedor del hotel.
+name: vcconsultores
+
 services:
   web:
     image: nginx:1.27-alpine
