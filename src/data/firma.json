@@ -1,0 +1,91 @@
+{
+  "nombre": "VC Consultores",
+  "razonSocial": "",
+  "_nota": "Los servicios, preguntas y textos de 'porQue' son una propuesta redactada a partir del sitio anterior. Pon serviciosRevisados en true solo cuando el despacho los haya aprobado.",
+  "serviciosRevisados": false,
+  "lema": "Contabilidad, impuestos y asesoría legal en Tuxtla Gutiérrez",
+  "descripcion": "Despacho contable y jurídico en Tuxtla Gutiérrez, Chiapas. Llevamos tu contabilidad, tus obligaciones ante el SAT y la parte legal de tu negocio con un solo equipo.",
+
+  "contacto": {
+    "telefono": "",
+    "whatsapp": "",
+    "emails": ["vcconsultoreschiapas@gmail.com"],
+    "formulario": "https://docs.google.com/forms/d/e/1FAIpQLSepVoydlQcl1712QkGzpuivwdTXczBwutadQEzsexAqnDPZFQ/viewform",
+    "horario": "",
+    "domicilio": {
+      "calle": "2a Norte Poniente 259-A",
+      "colonia": "Centro",
+      "ciudad": "Tuxtla Gutiérrez",
+      "estado": "Chiapas",
+      "cp": "29000"
+    }
+  },
+
+  "redes": {
+    "facebook": "https://www.facebook.com/vcconsultores.chiapas/",
+    "instagram": "",
+    "linkedin": ""
+  },
+
+  "areas": [
+    {
+      "slug": "contabilidad",
+      "titulo": "Contabilidad y fiscal",
+      "resumen": "Tu contabilidad al día y tus impuestos presentados en tiempo, sin sorpresas del SAT.",
+      "intro": "Nos encargamos de la contabilidad de personas físicas y morales: registramos, conciliamos, calculamos y presentamos. Tú recibes cada mes un reporte claro de cómo va tu negocio y cuánto vas a pagar.",
+      "servicios": [
+        { "titulo": "Contabilidad mensual", "texto": "Registro de ingresos y gastos, conciliaciones bancarias, estados financieros y contabilidad electrónica." },
+        { "titulo": "Declaraciones de impuestos", "texto": "Declaraciones mensuales y anuales de ISR e IVA, retenciones y DIOT, para personas físicas y morales." },
+        { "titulo": "RESICO y personas físicas", "texto": "Inscripción, cambio de régimen y cumplimiento para profesionistas, comerciantes y arrendadores." },
+        { "titulo": "Nómina e IMSS", "texto": "Cálculo de nómina, timbrado de recibos, altas y bajas en el IMSS, cuotas obrero-patronales e Infonavit." },
+        { "titulo": "Facturación (CFDI)", "texto": "Configuración de tu facturación, complementos de pago y revisión de que tus CFDI sean deducibles." },
+        { "titulo": "Atención al SAT", "texto": "Respuesta a requerimientos, cartas invitación, aclaraciones, opinión de cumplimiento y regularización de adeudos." }
+      ],
+      "preguntas": [
+        { "p": "¿Me pueden ayudar si tengo declaraciones atrasadas?", "r": "Sí. Revisamos tu situación en el SAT, calculamos lo pendiente y te proponemos un plan para regularizarte." },
+        { "p": "¿Trabajan con personas físicas o solo con empresas?", "r": "Con ambas: profesionistas, comerciantes, arrendadores, RESICO y personas morales." },
+        { "p": "¿Qué necesito para empezar?", "r": "Tu RFC, tu contraseña o e.firma del SAT y tus estados de cuenta. En la primera reunión te decimos exactamente qué más hace falta." }
+      ]
+    },
+    {
+      "slug": "legal",
+      "titulo": "Asesoría legal",
+      "resumen": "Abogados que conocen tu negocio: contratos, sociedades, asuntos laborales y defensa ante autoridades.",
+      "intro": "Como también llevamos la parte contable, entendemos el contexto completo de tu empresa. Te ayudamos a prevenir problemas legales y, si ya existen, a resolverlos.",
+      "servicios": [
+        { "titulo": "Derecho corporativo", "texto": "Constitución de sociedades, actas de asamblea, poderes, cambios de socios y libros corporativos." },
+        { "titulo": "Contratos", "texto": "Redacción y revisión de contratos de arrendamiento, prestación de servicios, compraventa y confidencialidad." },
+        { "titulo": "Derecho laboral", "texto": "Contratos individuales, reglamentos interiores, finiquitos, conciliación y defensa en juicios laborales." },
+        { "titulo": "Defensa fiscal", "texto": "Recursos de revocación y juicios de nulidad contra créditos fiscales, multas y embargos." },
+        { "titulo": "Derecho civil y familiar", "texto": "Sucesiones, testamentos, arrendamiento, cobranza y asuntos de familia." },
+        { "titulo": "Trámites y regularización", "texto": "Licencias, permisos y regularización de inmuebles y negocios ante autoridades locales." }
+      ],
+      "preguntas": [
+        { "p": "¿La primera consulta tiene costo?", "r": "PENDIENTE: confirmar con el despacho si la primera consulta es gratuita." },
+        { "p": "¿Atienden asuntos fuera de Tuxtla Gutiérrez?", "r": "PENDIENTE: confirmar con el despacho la cobertura geográfica." },
+        { "p": "Me llegó un crédito fiscal del SAT, ¿qué hago?", "r": "No dejes correr el plazo: en la mayoría de los casos tienes 30 días hábiles para impugnarlo. Contáctanos con el documento en mano y lo revisamos." }
+      ]
+    }
+  ],
+
+  "porQue": [
+    { "titulo": "Contador y abogado en un mismo lugar", "texto": "Los problemas fiscales casi siempre tienen un lado legal, y al revés. Aquí los ve el mismo equipo." },
+    { "titulo": "Te explicamos en claro", "texto": "Sin tecnicismos: sabes qué se presentó, cuánto pagas y por qué." },
+    { "titulo": "Atención directa", "texto": "Hablas con quien lleva tu asunto, no con un call center." }
+  ],
+
+  "pasos": [
+    { "titulo": "Nos cuentas tu caso", "texto": "Por WhatsApp, teléfono o en la oficina. Revisamos tu situación sin compromiso." },
+    { "titulo": "Te damos un plan y un precio", "texto": "Sabes desde el inicio qué vamos a hacer, en qué tiempos y cuánto cuesta." },
+    { "titulo": "Nos encargamos", "texto": "Te mantenemos al tanto de cada avance y de cada fecha importante." }
+  ],
+
+  "equipo": [],
+
+  "alianzas": [
+    { "nombre": "Colegio Nacional de Abogados y Estudiantes del Derecho (CNAED)", "logo": "/alianzas/cnaed.jpg" },
+    { "nombre": "Profesionistas a la Vanguardia", "logo": "/alianzas/profesionistas-vanguardia.jpg" },
+    { "nombre": "Gobierno del Estado de Chiapas", "logo": "/alianzas/gobierno-chiapas.jpg" }
+  ],
+  "alianzasConfirmadas": false
+}

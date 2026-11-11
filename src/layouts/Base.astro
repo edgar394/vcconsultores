@@ -1,0 +1,210 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/source-serif-4';
+import { firma, direccion, mapaUrl, whatsappUrl, telefonoUrl } from '../data/firma';
+
+interface Props {
+  titulo: string;
+  descripcion?: string;
+}
+const { titulo, descripcion = firma.descripcion } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const wa = whatsappUrl();
+const ruta = Astro.url.pathname;
+const nav = [
+  { href: '/contabilidad/', texto: 'Contabilidad y fiscal' },
+  { href: '/legal/', texto: 'Asesoría legal' },
+  { href: '/#nosotros', texto: 'Nosotros' },
+  { href: '/#contacto', texto: 'Contacto' },
+];
+const { contacto, redes } = firma;
+
+// Datos estructurados para que Google muestre domicilio, teléfono y horario.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['AccountingService', 'LegalService'],
+  name: firma.nombre,
+  description: firma.descripcion,
+  url: Astro.site?.href,
+  email: contacto.emails[0],
+  telephone: contacto.telefono || undefined,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: contacto.domicilio.calle,
+    addressLocality: contacto.domicilio.ciudad,
+    addressRegion: contacto.domicilio.estado,
+    postalCode: contacto.domicilio.cp,
+    addressCountry: 'MX',
+  },
+  areaServed: 'Chiapas',
+  sameAs: Object.values(redes).filter(Boolean),
+};
+---
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="theme-color" content="#14232b" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+    <header class="cabecera">
+      <div class="contenedor cabecera__fila">
+        <a href="/" class="marca" aria-label={`${firma.nombre}, inicio`}>
+          <span class="marca__sello" aria-hidden="true">VC</span>
+          <span class="marca__nombre">VC <em>Consultores</em></span>
+        </a>
+        <div class="menu">
+          <button type="button" class="menu__boton" aria-expanded="false" aria-controls="nav-principal" aria-label="Menú"><span></span><span></span><span></span></button>
+          <nav id="nav-principal" aria-label="Principal">
+            {nav.map((n) => (
+              <a href={n.href} aria-current={ruta === n.href ? 'page' : undefined}>{n.texto}</a>
+            ))}
+          </nav>
+        </div>
+        <script>
+          const boton = document.querySelector<HTMLButtonElement>('.menu__boton')!;
+          const menu = boton.parentElement!;
+          const cerrar = () => { menu.classList.remove('abierto'); boton.setAttribute('aria-expanded', 'false'); };
+          boton.addEventListener('click', () => {
+            const abierto = menu.classList.toggle('abierto');
+            boton.setAttribute('aria-expanded', String(abierto));
+          });
+          menu.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', cerrar));
+        </script>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor pie__rejilla">
+        <div>
+          <p class="pie__marca">VC <em>Consultores</em></p>
+          <p>{firma.lema}.</p>
+        </div>
+        <div>
+          <h2>Visítanos</h2>
+          <p><a href={mapaUrl} rel="noopener" target="_blank">{direccion}</a></p>
+          {contacto.horario && <p>{contacto.horario}</p>}
+        </div>
+        <div>
+          <h2>Contacto</h2>
+          <ul>
+            {telefonoUrl && <li><a href={telefonoUrl}>{contacto.telefono}</a></li>}
+            {wa && <li><a href={wa} rel="noopener" target="_blank">WhatsApp</a></li>}
+            {contacto.emails.map((e) => <li><a href={`mailto:${e}`}>{e}</a></li>)}
+            {redes.facebook && <li><a href={redes.facebook} rel="noopener" target="_blank">Facebook</a></li>}
+            {redes.instagram && <li><a href={redes.instagram} rel="noopener" target="_blank">Instagram</a></li>}
+            {redes.linkedin && <li><a href={redes.linkedin} rel="noopener" target="_blank">LinkedIn</a></li>}
+          </ul>
+        </div>
+      </div>
+      <div class="contenedor pie__legal">
+        <span>© {new Date().getFullYear()} {firma.razonSocial || firma.nombre}</span>
+        <a href="/aviso-de-privacidad/">Aviso de privacidad</a>
+      </div>
+    </footer>
+
+    {wa && (
+      <a class="wa-flotante" href={wa} rel="noopener" target="_blank" aria-label="Escríbenos por WhatsApp">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
+      </a>
+    )}
+
+    <style is:global>
+      :root {
+        --tinta: #14232b;
+        --tinta-2: #23394a;
+        --papel: #f8f5ef;
+        --blanco: #ffffff;
+        --ambar: #c27c12;
+        --ambar-osc: #8f5a07;
+        --ambar-claro: #f6e7cc;
+        --gris: #56636d;
+        --linea: #e3ddd1;
+        --serif: 'Source Serif 4 Variable', Georgia, serif;
+        --sans: 'Inter Variable', system-ui, sans-serif;
+        --radio: 14px;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+      body { margin: 0; background: var(--papel); color: var(--tinta); font: 400 1.0625rem/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+      h1, h2, h3 { font-family: var(--serif); line-height: 1.15; letter-spacing: -0.01em; margin: 0 0 .6em; font-weight: 600; }
+      h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); }
+      h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+      h3 { font-size: 1.3rem; }
+      p { margin: 0 0 1em; }
+      a { color: inherit; }
+      img { max-width: 100%; height: auto; }
+      .contenedor { width: min(1120px, 100% - 2rem); margin-inline: auto; }
+      .saltar { position: absolute; left: -999px; }
+      .saltar:focus { left: 1rem; top: 1rem; z-index: 99; background: var(--blanco); padding: .5rem 1rem; }
+      :focus-visible { outline: 3px solid var(--ambar); outline-offset: 3px; }
+
+      .seccion { padding-block: clamp(3.5rem, 8vw, 6rem); }
+      .seccion--blanca { background: var(--blanco); }
+      .seccion--tinta { background: var(--tinta); color: var(--papel); }
+      .antetitulo { font: 600 .8rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ambar-osc); margin-bottom: 1rem; }
+      .seccion--tinta .antetitulo { color: #e9b95f; }
+      .entrada { max-width: 46rem; color: var(--gris); font-size: 1.15rem; }
+      .seccion--tinta .entrada { color: #c5ced4; }
+
+      .boton { display: inline-flex; align-items: center; gap: .5rem; padding: .9rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none; border: 2px solid transparent; transition: background .2s, color .2s, border-color .2s; }
+      .boton--primario { background: var(--ambar); color: var(--blanco); }
+      .boton--primario:hover { background: var(--ambar-osc); }
+      .boton--secundario { border-color: currentColor; }
+      .boton--secundario:hover { background: var(--tinta); color: var(--papel); border-color: var(--tinta); }
+      .seccion--tinta .boton--secundario:hover, .heroe .boton--secundario:hover { background: var(--papel); color: var(--tinta); border-color: var(--papel); }
+      .botones { display: flex; flex-wrap: wrap; gap: .8rem; }
+
+      .cabecera { position: sticky; top: 0; z-index: 50; background: rgb(248 245 239 / .92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linea); }
+      .cabecera__fila { display: flex; align-items: center; justify-content: space-between; min-height: 4.25rem; }
+      .marca { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+      .marca__sello { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--tinta); color: #e9b95f; font: 700 .95rem/1 var(--serif); letter-spacing: .03em; }
+      .marca__nombre, .pie__marca { font: 600 1.25rem/1 var(--serif); }
+      .marca__nombre em, .pie__marca em { font-style: normal; font-weight: 400; color: var(--gris); }
+      .menu__boton { cursor: pointer; display: grid; gap: 5px; padding: .6rem; background: none; border: 0; }
+      .menu__boton span { display: block; width: 22px; height: 2px; background: var(--tinta); }
+      .menu nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--papel); border-bottom: 1px solid var(--linea); display: none; padding: .5rem 1rem 1rem; }
+      .menu.abierto nav { display: grid; }
+      .menu nav a { padding: .8rem 0; text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--linea); }
+      .menu nav a[aria-current='page'] { color: var(--ambar-osc); }
+      @media (min-width: 860px) {
+        .menu__boton { display: none; }
+        .menu nav, .menu.abierto nav { position: static; display: flex; gap: 2rem; padding: 0; border: 0; background: none; }
+        .menu nav a { border: 0; padding: .25rem 0; font-size: .95rem; }
+        .menu nav a:hover { color: var(--ambar-osc); }
+      }
+
+      .pie { background: var(--tinta); color: #c5ced4; padding-top: 3.5rem; font-size: .95rem; }
+      .pie h2 { font: 600 .8rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #e9b95f; margin-bottom: 1rem; }
+      .pie__marca { color: var(--papel); margin-bottom: .8rem; }
+      .pie__marca em { color: #8fa0ab; }
+      .pie ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+      .pie a { text-decoration: none; overflow-wrap: anywhere; }
+      .pie a:hover { color: var(--papel); text-decoration: underline; }
+      .pie__rejilla { display: grid; gap: 2rem; padding-bottom: 2.5rem; }
+      @media (min-width: 760px) { .pie__rejilla { grid-template-columns: 1.3fr 1fr 1fr; } }
+      .pie__legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; border-top: 1px solid var(--tinta-2); font-size: .85rem; }
+
+      .wa-flotante { position: fixed; right: 1rem; bottom: 1rem; z-index: 60; width: 3.5rem; height: 3.5rem; display: grid; place-items: center; border-radius: 50%; background: #1f9d55; color: #fff; box-shadow: 0 8px 24px rgb(0 0 0 / .2); }
+      .wa-flotante:hover { background: #17834a; }
+
+      @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+    </style>
+  </body>
+</html>

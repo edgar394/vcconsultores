@@ -1,0 +1,43 @@
+---
+import { firma, direccion, mapaUrl, whatsappUrl, telefonoUrl } from '../data/firma';
+
+interface Props { mensajeWhatsapp?: string }
+const wa = whatsappUrl(Astro.props.mensajeWhatsapp);
+const { contacto } = firma;
+---
+<section class="seccion seccion--tinta" id="contacto">
+  <div class="contenedor contacto">
+    <div>
+      <p class="antetitulo">Contacto</p>
+      <h2>Cuéntanos tu caso</h2>
+      <p class="entrada">La primera conversación es para entender tu situación. Te decimos cómo podemos ayudarte y cuánto cuesta, sin compromiso.</p>
+      <div class="botones">
+        {wa && <a class="boton boton--primario" href={wa} rel="noopener" target="_blank">Escríbenos por WhatsApp</a>}
+        {telefonoUrl && <a class={`boton ${wa ? 'boton--secundario' : 'boton--primario'}`} href={telefonoUrl}>Llamar al {contacto.telefono}</a>}
+        {contacto.formulario && <a class={`boton ${wa || telefonoUrl ? 'boton--secundario' : 'boton--primario'}`} href={contacto.formulario} rel="noopener" target="_blank">Envíanos tu consulta</a>}
+      </div>
+    </div>
+    <dl class="contacto__datos">
+      <div>
+        <dt>Oficina</dt>
+        <dd><a href={mapaUrl} rel="noopener" target="_blank">{direccion}</a></dd>
+      </div>
+      {contacto.horario && <div><dt>Horario</dt><dd>{contacto.horario}</dd></div>}
+      {contacto.telefono && <div><dt>Teléfono</dt><dd><a href={telefonoUrl}>{contacto.telefono}</a></dd></div>}
+      <div>
+        <dt>Correo</dt>
+        {contacto.emails.map((e) => <dd><a href={`mailto:${e}`}>{e}</a></dd>)}
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contacto { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 860px) { .contacto { grid-template-columns: 1.3fr 1fr; gap: 4rem; } }
+  .contacto__datos { margin: 0; display: grid; gap: 1.4rem; padding: 1.75rem; border: 1px solid var(--tinta-2); border-radius: var(--radio); background: rgb(255 255 255 / .03); }
+  dt { font: 600 .75rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #e9b95f; margin-bottom: .4rem; }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  dd a { text-decoration-color: rgb(255 255 255 / .35); text-underline-offset: 3px; }
+  dd a:hover { text-decoration-color: currentColor; }
+</style>

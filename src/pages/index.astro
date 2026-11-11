@@ -1,0 +1,144 @@
+---
+import Base from '../layouts/Base.astro';
+import Contacto from '../components/Contacto.astro';
+import { firma, contactoPrincipal } from '../data/firma';
+
+const cta = contactoPrincipal();
+const iconos: Record<string, string> = {
+  contabilidad: 'M4 4h16v16H4z M8 8h8 M8 12h8 M8 16h5',
+  legal: 'M12 3v18 M5 21h14 M4 8h16 M7 8l-3 7a3 3 0 0 0 6 0z M17 8l-3 7a3 3 0 0 0 6 0z',
+};
+---
+<Base titulo="VC Consultores | Contadores y abogados en Tuxtla Gutiérrez, Chiapas">
+  <section class="heroe">
+    <div class="contenedor heroe__rejilla">
+      <div>
+        <p class="antetitulo">Despacho contable y jurídico · Tuxtla Gutiérrez</p>
+        <h1>Tus impuestos en orden y tu negocio <span>protegido</span>.</h1>
+        <p class="entrada">{firma.descripcion}</p>
+        <div class="botones">
+          <a class="boton boton--primario" href={cta.href} {...(cta.externo ? { rel: 'noopener', target: '_blank' } : {})}>{cta.texto}</a>
+          <a class="boton boton--secundario" href="#servicios">Ver servicios</a>
+        </div>
+      </div>
+      <aside class="calendario" aria-labelledby="cal-titulo">
+        <p class="calendario__titulo" id="cal-titulo">Fechas que cuidamos por ti</p>
+        <ol>
+          <li><strong>Día 17</strong><span>de cada mes</span><p>Pagos provisionales de ISR e IVA y retenciones.</p></li>
+          <li><strong>31 mar</strong><span>cada año</span><p>Declaración anual de personas morales.</p></li>
+          <li><strong>30 abr</strong><span>cada año</span><p>Declaración anual de personas físicas.</p></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="seccion" id="servicios">
+    <div class="contenedor">
+      <p class="antetitulo">Servicios</p>
+      <h2>Dos áreas, un mismo equipo</h2>
+      <div class="areas">
+        {firma.areas.map((a) => (
+          <a class="area" href={`/${a.slug}/`}>
+            <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden="true"><path d={iconos[a.slug]} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <h3>{a.titulo}</h3>
+            <p>{a.resumen}</p>
+            <ul>{a.servicios.slice(0, 4).map((s) => <li>{s.titulo}</li>)}</ul>
+            <span class="area__mas">Conoce el servicio →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion seccion--blanca" id="nosotros">
+    <div class="contenedor">
+      <p class="antetitulo">Por qué VC Consultores</p>
+      <h2>Contador y abogado que hablan el mismo idioma</h2>
+      <div class="tres">
+        {firma.porQue.map((r) => (
+          <div><h3>{r.titulo}</h3><p>{r.texto}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <p class="antetitulo">Cómo trabajamos</p>
+      <h2>Empezar es sencillo</h2>
+      <ol class="pasos">
+        {firma.pasos.map((p) => (
+          <li><h3>{p.titulo}</h3><p>{p.texto}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {firma.equipo.length > 0 && (
+    <section class="seccion seccion--blanca" id="equipo">
+      <div class="contenedor">
+        <p class="antetitulo">Equipo</p>
+        <h2>Quién te atiende</h2>
+        <div class="tres">
+          {firma.equipo.map((m: { nombre: string; cargo: string; cedula?: string }) => (
+            <div><h3>{m.nombre}</h3><p>{m.cargo}{m.cedula && <><br /><small>Cédula profesional {m.cedula}</small></>}</p></div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {firma.alianzasConfirmadas && firma.alianzas.length > 0 && (
+    <section class="seccion seccion--blanca alianzas">
+      <div class="contenedor">
+        <p class="antetitulo">Alianzas</p>
+        <ul>
+          {firma.alianzas.map((al) => <li><img src={al.logo} alt={al.nombre} loading="lazy" /></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <Contacto />
+</Base>
+
+<style>
+  .heroe { padding-block: clamp(3rem, 8vw, 6rem); background: radial-gradient(1200px 500px at 85% 0%, var(--ambar-claro), transparent 60%); }
+  .heroe__rejilla { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 960px) { .heroe__rejilla { grid-template-columns: 1.35fr 1fr; gap: 4rem; } }
+  h1 span { color: var(--ambar-osc); font-style: italic; }
+  .heroe .entrada { margin-bottom: 2rem; }
+
+  .calendario { background: var(--tinta); color: var(--papel); border-radius: var(--radio); padding: 1.75rem; box-shadow: 0 30px 60px -30px rgb(20 35 43 / .5); }
+  .calendario__titulo { font: 600 .8rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #e9b95f; margin-bottom: 1.25rem; }
+  .calendario ol { list-style: none; margin: 0; padding: 0; display: grid; }
+  .calendario li { display: grid; grid-template-columns: 5.5rem 1fr; column-gap: 1rem; padding-block: 1rem; border-top: 1px solid var(--tinta-2); }
+  .calendario strong { font: 600 1.35rem/1.1 var(--serif); grid-row: span 2; }
+  .calendario span { font-size: .8rem; color: #8fa0ab; }
+  .calendario p { margin: 0; color: #dfe5e8; font-size: .95rem; }
+
+  .areas { display: grid; gap: 1.5rem; margin-top: 2rem; }
+  @media (min-width: 760px) { .areas { grid-template-columns: 1fr 1fr; } }
+  .area { display: flex; flex-direction: column; text-decoration: none; background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 2rem; transition: border-color .2s, transform .2s, box-shadow .2s; }
+  .area:hover { border-color: var(--ambar); transform: translateY(-3px); box-shadow: 0 20px 40px -24px rgb(20 35 43 / .35); }
+  .area svg { color: var(--ambar-osc); margin-bottom: 1rem; }
+  .area > p { color: var(--gris); }
+  .area ul { padding-left: 1.1rem; margin: 0 0 1.5rem; display: grid; gap: .3rem; }
+  .area li::marker { color: var(--ambar); }
+  .area__mas { margin-top: auto; font-weight: 600; color: var(--ambar-osc); }
+
+  .tres { display: grid; gap: 2rem; margin-top: 2rem; }
+  @media (min-width: 760px) { .tres { grid-template-columns: repeat(3, 1fr); } }
+  .tres > div { border-top: 3px solid var(--ambar); padding-top: 1.25rem; }
+  .tres p { color: var(--gris); }
+
+  .pasos { list-style: none; counter-reset: paso; margin: 2rem 0 0; padding: 0; display: grid; gap: 1.5rem; }
+  @media (min-width: 760px) { .pasos { grid-template-columns: repeat(3, 1fr); } }
+  .pasos li { counter-increment: paso; background: var(--blanco); border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.75rem; }
+  .pasos li::before { content: counter(paso, decimal-leading-zero); display: block; font: 600 2rem/1 var(--serif); color: var(--ambar); margin-bottom: 1rem; }
+  .pasos p { color: var(--gris); margin: 0; }
+
+  .alianzas { padding-block: 3rem; }
+  .alianzas ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 2.5rem; align-items: center; }
+  .alianzas img { max-height: 80px; width: auto; filter: grayscale(1); opacity: .8; }
+</style>

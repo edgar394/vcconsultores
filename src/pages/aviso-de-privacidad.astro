@@ -1,0 +1,39 @@
+---
+// Plantilla de aviso de privacidad integral (LFPDPPP). El despacho debe revisarla
+// y ajustarla antes de publicar: es un documento legal del propio despacho.
+import Base from '../layouts/Base.astro';
+import { firma, direccion } from '../data/firma';
+
+const responsable = firma.razonSocial || firma.nombre;
+const correo = firma.contacto.emails[0];
+---
+<Base titulo="Aviso de privacidad | VC Consultores" descripcion={`Aviso de privacidad de ${responsable}.`}>
+  <article class="seccion">
+    <div class="contenedor texto">
+      <h1>Aviso de privacidad</h1>
+      <p><strong>{responsable}</strong>, con domicilio en {direccion}, es responsable del tratamiento de los datos personales que nos proporciones, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+
+      <h2>Datos que recabamos</h2>
+      <p>Datos de identificación y contacto (nombre, teléfono, correo electrónico), datos fiscales (RFC, régimen, información contable) y, cuando el asunto lo requiera, datos patrimoniales y documentación relacionada con tu caso.</p>
+
+      <h2>Para qué los usamos</h2>
+      <p>Para responder tus consultas, prestar los servicios contables, fiscales y legales que contrates, cumplir obligaciones ante autoridades y facturar. De forma secundaria, para enviarte información sobre cambios fiscales o legales que te afecten; puedes negarte escribiendo a <a href={`mailto:${correo}`}>{correo}</a>.</p>
+
+      <h2>Con quién los compartimos</h2>
+      <p>Solo con autoridades (como el SAT, el IMSS o tribunales) cuando sea necesario para prestar el servicio o lo exija la ley. No vendemos ni cedemos tus datos.</p>
+
+      <h2>Tus derechos ARCO</h2>
+      <p>Puedes acceder a tus datos, rectificarlos, cancelarlos u oponerte a su uso, así como revocar tu consentimiento, enviando una solicitud a <a href={`mailto:${correo}`}>{correo}</a> con tu nombre, el derecho que deseas ejercer y una identificación. Te responderemos en un plazo máximo de 20 días hábiles.</p>
+
+      <h2>Cambios a este aviso</h2>
+      <p>Cualquier cambio se publicará en esta página.</p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .texto { max-width: 46rem; }
+  .texto h2 { font-size: 1.4rem; margin-top: 2rem; }
+  .texto p { color: var(--gris); }
+  .texto a { color: var(--ambar-osc); }
+</style>
