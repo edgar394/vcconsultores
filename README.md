@@ -30,5 +30,5 @@ debe revisarlo antes de publicar.
 
 ## Publicación
 
-Pendiente: se servirá desde la VPS compartida con Caddy (repo `vps-infra`), igual que el
-sitio del Hotel Santo Domingo.
+Desde la VPS compartida con Caddy (repo `vps-infra`). Procedimiento completo, vista previa y
+cambio de dominio en [docs/runbook-publicar.md](docs/runbook-publicar.md). Uso: `SITE_URL=... DEPLOY_HOST=deploy@app.eliancorporativo.tech npm run publish`.
